@@ -42,12 +42,25 @@
 		var yMax = d3.max(dataset, function (d) {return d[1]});
 
 
-
 		var xScale = d3.scaleLinear().domain([xMin, xMax]).range([padding.left, contentWidth + padding.left]);
 		var yScale = d3.scaleLinear().domain([yMin, yMax]).range([contentHeight + padding.top, padding.top]);
 
 
+		// x轴
+        svg
+        .append("g")
+        .attr('transform', 'translate(0,'+ (contentHeight + padding.top) +')')
+        .call(d3.axisBottom(xScale));
 
+
+        // y轴
+		svg
+		.append("g")
+		.attr('transform', 'translate('+ padding.left +',0)')
+        .call(d3.axisLeft(yScale));
+
+
+        // 点
 		svg
 		.selectAll('.plot')
 		.data(dataset)
@@ -58,6 +71,8 @@
 		.attr('cy', function (d, i) {return yScale(d[1])})
 		.attr('r', 5)
 
+
+		// 文本
 		svg
 		.selectAll('.plot-text')
 		.data(dataset)
